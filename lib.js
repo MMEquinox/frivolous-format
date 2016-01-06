@@ -1,62 +1,67 @@
-Array.prototype.contains = function(arr, value) {
-	for (i in arr) {
-  	if (arr[i] == value) {
-    	return true;
+(function() {
+
+  Array.prototype.contains = function(arr, value) {
+  for (i in arr) {
+    if (arr[i] == value) {
+      return true;
     }
   }
   return false;
  }
-class _Config {
+  var input = (function() {
+    //getElementById... 
+    var string = '++testing++';
 
-	constructor(stringToFormat, bolds, italics, strikes, underlines, linebreaks) {
-  	this._stringToFormat = stringToFormat;
-    this._symbols = {bold : bolds, italic: italics, strike: strikes, underline: underlines, linebreak : linebreaks};
-  }
+    return string;
+  })();
 
-  this.boldPos = [];
-  this.italicPos = [];
-  this.strikePos = [];
-  this.underlinePos = [];
-  this.linebreakPos = [];
-  
-}
+  var symbolCreation = (function() {
+      var defaultSymbols = {bold: '++', italic: '**', strike: '--', underline: '__', linebreak : '>>'};
+      var symbols = defaultSymbols;
 
-class stringPrep extends Config {
+      return symbols;
+  })();
 
-	_stringExtraction() {
-  	for (var i = 0; i < this.stringToFormat; i++) {
-    	if (this._value.contains(this.stringToFormat[i]) && this._value.contains(this.stringToFormat[i+1] && this.key == undefined) {
-    		this.key = this.stringToFormat[i] == this._symbols.bold && this.stringToFormat[i + 1] == this._symbols.bold ? this._symbols.bold : undefined;
-        this.key = this.stringToFormat[i] == this._symbols.italic && this.stringToFormat[i + 1] == this._symbols.italic ? this._symbols.italic : undefined;
-        this.key = this.stringToFormat[i] == this._symbols.strike && this.stringToFormat[i + 1] == this._symbols.strike ? this._symbols.strike : undefined;
-        this.key = this.stringToFormat[i] == this._symbols.underline && this.stringToFormat[i + 1] == this._symbols.underline ? this._symbols.underline : undefined;
-        this.key = this.stringToFormat[i] == this._symbols.linebreak && this.stringToFormat[i + 1] == this._symbols.linebreak ? this._symbols.linebreak : undefined;
-        if (this.key != undefined) {
-          switch (this.key) {
-            case this._symbols.bold:
-              this.boldPos.push([i, i + 1]);
-            case this._symbols.italic:
-              this.italicPos.push([i, i + 1]);
-            case this._symbols.strike:
-              this.strikePos.push([i, i + 1]);
-            case this._symbols.underline:
-              this.underlinePos.push([i, i + 1]);
-            case this._symbols.linebreak:
-              this.linebreakPos.push([i, i + 1]);
-          }
+
+  var symbolLocations = (function() {
+    var formatString = '++testing++';
+    var positionObj;
+    var symArr = [];
+    for (value in symbolCreation) {
+      symArr.pop(value);
+    };
+
+    if (formatString != undefined) {
+      for (i in formatString) {
+        if (symArr.contains(symArr, formatString[i]) && symArr.contains(symArr, formatString[i+1])) {
+          positionObj.bold = formatString[i] == symbolCreation.bold && formatString[i+1] == symbolCreation.bold ? positionObj.bold.push([i, i+1]) : positionObj.bold;
+          positionObj.italic = formatString[i] == symbolCreation.italic && formatString[i+1] == symbolCreation.italic ? positionObj.italic.push([i, i+1]) : positionObj.italic;
+          positionObj.strike = formatString[i] == symbolCreation.strike && formatString[i+1] == symbolCreation.strike ? positionObj.strike.push([i, i+1]) : positionObj.strike;
+          positionObj.underline = formatString[i] == symbolCreation.underline && formatString[i+1] == symbolCreation.underline ? positionObj.underline.push([i, i+1]) : positionObj.underline;
+          positionObj.linebreak = formatString[i] == symbolCreation.linebreak && formatString[i+1] == symbolCreation.linebreak ? positionObj.linebreak.push([i, i+1]) : positionObj.linebreak;
           i += 1;
         }
       }
+    } else {
+      console.log('fuck');
     }
-  }
-  
-  
-  this._value = Object.values(this._symbols)
-	this.key;
-}
 
-class bold {}
-class italic {}
-class strike {}
-class underline {}
-class lineBreak {}
+
+    return {
+
+      setString : function(string) {
+        formatString  = string; 
+      },
+
+      getPosition : function() {
+        return positionObj;
+      }
+
+    }
+  })();
+  console.log(symbolLocations.getPositon());
+  var symbolReplacement;
+
+
+
+})();
