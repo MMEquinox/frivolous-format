@@ -1,8 +1,8 @@
 (function() {
 
-  Array.prototype.contains = function(arr, value) {
-  for (i in arr) {
-    if (arr[i] == value) {
+  Array.prototype.contains = function(value) {
+  for (i in this) {
+    if (this[i] == value) {
       return true;
     }
   }
@@ -31,43 +31,45 @@
       return symbolCreation;
   }
 
+  var x = symbolCreationClosure();
+  console.log(x.getSymbols());
 
-  var SymbolLocationsClosure = function(string, key) {
-    symbolLocations = {}
 
-    symbolLocations.formatString = key;
-    symbolLocations.positionObj;
-    symbolLocations.symArr = [];
-    for (value in symbolCreation) {
-      symArr.pop(value);
-    };
+  var SymPosClosure = function(string, key) {
+    symPos = {};
 
-    for (i in formatString) {
-      if (symbolLocations.symArr.contains(symbolLocations.symArr, formatString[i]) && symbolLocations.symArr.contains(symbolLocations.symArr, formatString[i+1])) {
-        positionObj.bold = formatString[i] == symbolCreation.bold && formatString[i+1] == symbolCreation.bold ? positionObj.bold.push([i, i+1]) : positionObj.bold;
-        positionObj.italic = formatString[i] == symbolCreation.italic && formatString[i+1] == symbolCreation.italic ? positionObj.italic.push([i, i+1]) : positionObj.italic;
-        positionObj.strike = formatString[i] == symbolCreation.strike && formatString[i+1] == symbolCreation.strike ? positionObj.strike.push([i, i+1]) : positionObj.strike;
-        positionObj.underline = formatString[i] == symbolCreation.underline && formatString[i+1] == symbolCreation.underline ? positionObj.underline.push([i, i+1]) : positionObj.underline;
-        positionObj.linebreak = formatString[i] == symbolCreation.linebreak && formatString[i+1] == symbolCreation.linebreak ? positionObj.linebreak.push([i, i+1]) : positionObj.linebreak;
-        i += 1;
+    symPos.formatString = string;
+    symPos.formatKey = new Array;
+    symPos.formatKey = (function() {
+      for (value in key) {
+        symPos.formatKey.push(value);
+        console.log(key);
+      }
+    })();
+    symPos.poss;
+
+
+    for (i = 0; i < symPos.formatString.length; i++) {
+      for (z = 0; i < symPos.formatKey; i++) {
+        if (symPos.formatString[i] == symPos.formatKey[z] && symPos.formatString[i+1] == symPos.formatKey[z]){
+          symPos.poss.bold = symPos.formatKey[z] == string.bold ? console.log('bold') : symPos.poss.bold;
+          symPos.poss.italic = symPos.formatKey[z] == string.italic ? symPos.poss.push([i, i+1]) : symPos.poss.bold;
+          symPos.poss.strike = symPos.formatKey[z] == string.strike ? symPos.poss.push([i, i+1]) : symPos.poss.bold;
+          symPos.poss.underline = symPos.formatKey[z] == string.underline ? symPos.poss.push([i, i+1]) : symPos.poss.bold;
+          symPos.poss.linebreak = symPos.formatKey[z] == string.linebreak ? symPos.poss.push([i, i+1]) : symPos.poss.bold;
+        }
       }
     }
 
-
-    return {
-
-      setString : function(string) {
-        formatString  = string; 
-      },
-
-      getPosition : function() {
-        return positionObj;
-      }
-
+    symPos.getPos = function() {
+      return symPos.poss;
     }
+
+    return symPos;
   }
 
-
-
-
-}
+  var symbols = symbolCreationClosure();
+  var pos = SymPosClosure('++Format++ this __string__!',symbols.getSymbols());
+  console.log(pos.getPos());
+  console.log(pos.formatKey);
+})();
