@@ -8,7 +8,7 @@
   }
   return false;
  }
-  var InputClosure = function(formatString) {
+  var InputModule = function(formatString) {
     var input = {};
     input.formatString = formatString;
 
@@ -17,7 +17,7 @@
     }
   }
 
-  var symbolCreationClosure = function() {
+  var symbolCreationModule = function() {
       var symbolCreation = {};
       symbolCreation.formatSymbols = {bold: '+', italic: '*', strike: '-', underline: '_', linebreak : '>'};
       
@@ -32,7 +32,7 @@
   }
 
 
-  var SymPosClosure = function(string, key) {
+  var SymPosModule = function(string, key) {
     symPos = {};
 
     symPos.formatString = string;
@@ -79,9 +79,8 @@
 
     return symPos;
   }
-  
-  //example
-  var symbols = symbolCreationClosure();
-  var pos = SymPosClosure('++Format++ this __string__!',symbols.getSymbols());
+
+  var symbols = symbolCreationModule();
+  var pos = SymPosModule('++Format++ this __string__!',symbols.getSymbols());
   console.log(pos.getPos());
 })();
