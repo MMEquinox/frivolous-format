@@ -19,7 +19,7 @@
 
   var symbolCreationClosure = function() {
       var symbolCreation = {};
-      symbolCreation.formatSymbols = {bold: '++', italic: '**', strike: '--', underline: '__', linebreak : '>>'};
+      symbolCreation.formatSymbols = {bold: '+', italic: '*', strike: '-', underline: '_', linebreak : '>'};
       
       symbolCreation.setSymbols = function(bold, italic, strike, underline, linebreak) {
 
@@ -38,8 +38,8 @@
     symPos.formatString = string;
     symPos.formatKey = new Array;
     (function() {
-      for (value in key) {
-        symPos.formatKey.push(value);
+      for (name in key) {
+        symPos.formatKey.push(key[name]);
       }
     })();
 
@@ -53,16 +53,22 @@
 
 
     for (i = 0; i < symPos.formatString.length; i++) {
-      console.log(i);
       for (z = 0; z < symPos.formatKey.length; z++) {
-        console.log(z);
         if (symPos.formatString[i] == symPos.formatKey[z] && symPos.formatString[i+1] == symPos.formatKey[z]) {
-          console.log('working');
-          symPos.poss.bold = symPos.formatKey[z] == string.bold ? symPos.poss.bold.push(i, i+1) : symPos.poss.bold;
-          symPos.poss.italic = symPos.formatKey[z] == string.italic ? symPos.poss.italic.push([i, i+1]) : symPos.poss.bold;
-          symPos.poss.strike = symPos.formatKey[z] == string.strike ? symPos.poss.strike.push([i, i+1]) : symPos.poss.bold;
-          symPos.poss.underline = symPos.formatKey[z] == string.underline ? symPos.underline.push([i, i+1]) : symPos.poss.bold;
-          symPos.poss.linebreak = symPos.formatKey[z] == string.linebreak ? symPos.linebreak.push([i, i+1]) : symPos.poss.bold;
+          if (symPos.formatKey[z] == key.bold) {
+            symPos.poss.bold.push([i, i + 1]);
+          } else if (symPos.formatKey[z] == key.italic) {
+            symPos.poss.italic.push([i, i + 1]);
+          }
+          else if (symPos.formatKey[z] == key.strike) {
+            symPos.poss.strike.push([i, i + 1]);
+          } 
+          else if (symPos.formatKey[z] == key.underline) {
+            symPos.poss.underline.push([i, i + 1]);
+          } 
+          else if (symPos.formatKey[z] == key.linebreak) {
+            symPos.poss.linebreak.push([i, i + 1]);
+          } 
         }
       }
     }
@@ -73,7 +79,9 @@
 
     return symPos;
   }
-
+  
+  //example
   var symbols = symbolCreationClosure();
   var pos = SymPosClosure('++Format++ this __string__!',symbols.getSymbols());
+  console.log(pos.getPos());
 })();
