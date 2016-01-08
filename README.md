@@ -1,5 +1,5 @@
 # frivolous-format
-Simple text formatting in Vanilla JavaScript.
+Simple text formatting in vanilla JavaScript.
 
 Default Key:
 
