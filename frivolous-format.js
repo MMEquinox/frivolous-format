@@ -1,86 +1,68 @@
 (function() {
 
-  Array.prototype.contains = function(value) {
-  for (i in this) {
-    if (this[i] == value) {
-      return true;
-    }
-  }
-  return false;
- }
-  var InputModule = function(formatString) {
-    var input = {};
-    input.formatString = formatString;
 
-    input.getFormatString = function getString() {
-      return input;
-    }
-  }
+  var key = function(string, obj) {
+  		data = {}
+     	data.defaultKey = {bold: '+', italic: '*', strike: '-', linebreak : '>'}; //add new keyname : symbol
+     	data.key;
+     	data.string = string;
 
-  var symbolCreationModule = function() {
-      var symbolCreation = {};
-      symbolCreation.formatSymbols = {bold: '+', italic: '*', strike: '-', underline: '_', linebreak : '>'};
-      
-      symbolCreation.setSymbols = function(bold, italic, strike, underline, linebreak) {
+     	if (obj != undefined) {
+     		data.key = Object.assign({}, data.defaultKey, obj);
+     	} else {
+     		data.key = data.defaultKey;
+     	}
 
-      }
+     	return data;
+     }
 
-      symbolCreation.getSymbols = function() {
-        return this.formatSymbols;
-      }
-      return symbolCreation;
-  }
+  var keyCounter = function(data) {
+    keyCount = {};
+                    
+   	keyCount.bold = 0; //additional keys must be added
+   	keyCount.italic = 0;
+   	keyCount.strike = 0;
+   	keyCount.linebreak = 0;
 
+   	for (i = 0; i < data.string.length; i++) {
+   		keyCount.bold = data.string[i] == data.key['bold'] && data.string[i + 1] == data.key['bold'] ? keyCount.bold + 1 : keyCount.bold * 1; //additional keys must be added. 
+   		keyCount.italic = data.string[i] == data.key['italic'] && data.string[i + 1] == data.key['italic'] ? keyCount.italic + 1 : keyCount.italic * 1;
+   		keyCount.strike = data.string[i] == data.key['strike'] && data.string[i + 1] == data.key['strike'] ? keyCount.strike + 1 : keyCount.strike * 1;
+   		keyCount.linebreak = data.string[i] == data.key['linebreak'] && data.string[i + 1] == data.key['linebreak'] ? keyCount.linebreak + 1 : keyCount.linebreak * 1;
+   	}
 
-  var SymPosModule = function(string, key) {
-    symPos = {};
-
-    symPos.formatString = string;
-    symPos.formatKey = new Array;
-    (function() {
-      for (name in key) {
-        symPos.formatKey.push(key[name]);
-      }
-    })();
-
-    symPos.poss = {
-      bold : new Array,
-      italic : new Array,
-      strike : new Array,
-      underline : new Array,
-      linebreak : new Array
-    };
+   	return keyCount;
 
 
-    for (i = 0; i < symPos.formatString.length; i++) {
-      for (z = 0; z < symPos.formatKey.length; z++) {
-        if (symPos.formatString[i] == symPos.formatKey[z] && symPos.formatString[i+1] == symPos.formatKey[z]) {
-          if (symPos.formatKey[z] == key.bold) {
-            symPos.poss.bold.push([i, i + 1]);
-          } else if (symPos.formatKey[z] == key.italic) {
-            symPos.poss.italic.push([i, i + 1]);
-          }
-          else if (symPos.formatKey[z] == key.strike) {
-            symPos.poss.strike.push([i, i + 1]);
-          } 
-          else if (symPos.formatKey[z] == key.underline) {
-            symPos.poss.underline.push([i, i + 1]);
-          } 
-          else if (symPos.formatKey[z] == key.linebreak) {
-            symPos.poss.linebreak.push([i, i + 1]);
-          } 
-        }
-      }
-    }
-
-    symPos.getPos = function() {
-      return symPos.poss;
-    }
-
-    return symPos;
   }
 
-  var symbols = symbolCreationModule();
-  var pos = SymPosModule('++Format++ this __string__!',symbols.getSymbols());
-  console.log(pos.getPos());
+  var keyReplacement = function(data, keyCount) {
+    for (i = 0; i < data.string.length; i++) {
+    	if (keyCount.bold % 2 == 0 && keyCount.bold != 0) { //additional if else must be added for each key
+    		data.string = data.string.replace('++', '<strong>');
+    		keyCount.bold = keyCount.bold - 1;
+   	 } else {
+   	 		data.string = data.string.replace('++', '</strong>')
+   	 		keyCount.bold -= 1;
+   	 }
+    	if (keyCount.italic % 2 == 0 && keyCount.italic != 0) {
+    		data.string = data.string.replace('**', '<em>');
+    		keyCount.italic -= 1;
+   	 } else {
+   	 		data.string = data.string.replace('**', '</em>');
+   	 		keyCount.italic -=1;
+   	 }
+    	if (keyCount.strike % 2 == 0 && keyCount.strike != 0) {
+    		data.string = data.string.replace('--', '<s>');
+    		keyCount.strike -= 1;
+   	 } else {
+   	 		data.string = data.string.replace('--', '</s>')
+   	 		keyCount.strike -= 1;
+   	 }
+   	 data.string = data.string.replace('>>', '<br>');
+
+  }
+ return data.string;
+}
+
 })();
