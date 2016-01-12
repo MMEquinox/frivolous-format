@@ -1,5 +1,10 @@
 # frivolous-format
-Simple text formatting in vanilla JavaScript.
+Simple semantic text formatting in JavaScript.
+Simple to use see line 88 in example.html
 
-Default Key:
+
+Version: 1.0
+Support for bold, italic, strike, linebreak
+
+
 
